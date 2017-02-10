@@ -37,7 +37,7 @@ public class BSLDA extends LDA
 		Arrays.fill(labelStatuses, false);
 		for (int doc=0; doc<numDocs; doc++)
 		{
-			if (inputDocs[doc].label!=-1)
+			if (inputDocs[doc].label==0 || inputDocs[doc].label==1)
 			{
 				labels[doc]=inputDocs[doc].label;
 				labelStatuses[doc]=true;

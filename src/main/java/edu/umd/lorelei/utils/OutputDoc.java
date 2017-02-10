@@ -2,14 +2,14 @@ package edu.umd.lorelei.utils;
 
 public class OutputDoc
 {
-	public final int ID;
+	public final String ID;
 	
 	public double topicProb[];
 	public double confidence,regression;
 	public int prediction;
 	public int label;
 	
-	public OutputDoc(int id, int numTopics)
+	public OutputDoc(String id, int numTopics)
 	{
 		this.ID=id;
 		topicProb=new double[numTopics];

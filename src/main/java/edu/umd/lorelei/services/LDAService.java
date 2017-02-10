@@ -16,8 +16,9 @@ public class LDAService
 	public static final int LDA=0,BSLDA=1;
 	public static final int NUM_DOCS_UPPER_LIMIT=50000;
 	
-	public static Output runService(InputDoc inputDocs[], int modelID, int numTopics) throws IOException
+	public static Output runService(InputDoc inputDocs[], int domainID, int modelID, int numTopics) throws IOException
 	{
+		domainID=Cfg.checkDomainID(domainID);
 		modelID=Cfg.checkModelID(modelID);
 		numTopics=Cfg.checkNumTopics(numTopics);
 		
@@ -28,15 +29,15 @@ public class LDAService
 			output.info="#Docs is over upper limit";
 			return output;
 		}
-		LDAParam param=new LDAParam(Cfg.vocabFileName);
+		LDAParam param=new LDAParam(Cfg.getVocabFileName(domainID));
 		param.numTopics=numTopics;
 		
 		LDA lda;
 		switch (modelID)
 		{
-		case BSLDA: lda=new BSLDA(Cfg.getModelFileName(modelID, numTopics), param); break;
+		case BSLDA: lda=new BSLDA(Cfg.getModelFileName(domainID, modelID, numTopics), param); break;
 		case LDA:
-		default: lda=new LDA(Cfg.getModelFileName(modelID, numTopics), param); break;
+		default: lda=new LDA(Cfg.getModelFileName(domainID, modelID, numTopics), param); break;
 		}
 		lda.readCorpus(inputDocs);
 		lda.initialize();

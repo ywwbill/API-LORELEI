@@ -13,12 +13,13 @@ import edu.umd.lorelei.utils.InputDoc;
 
 public class CorpusService
 {
-	public static InputDoc[] convertCorpus(InputDoc inputDocs[]) throws IOException
+	public static InputDoc[] convertCorpus(InputDoc inputDocs[], int domainID) throws IOException
 	{	
 		int numDocs=inputDocs.length;
 		InputDoc outputDocs[]=new InputDoc[numDocs];
 		
-		ClassPathResource rescource=new ClassPathResource(Cfg.vocabFileName);
+		domainID=Cfg.checkDomainID(domainID);
+		ClassPathResource rescource=new ClassPathResource(Cfg.getVocabFileName(domainID));
 		BufferedReader br=new BufferedReader(new InputStreamReader(rescource.getInputStream()));
 		String line;
 		HashMap<String, Integer> vocabMap=new HashMap<String, Integer>();
@@ -36,12 +37,6 @@ public class CorpusService
 			outputDocs[doc]=new InputDoc();
 			outputDocs[doc].ID=inputDocs[doc].ID;
 			outputDocs[doc].label=inputDocs[doc].label;
-			outputDocs[doc].isIndexed=true;
-			if (inputDocs[doc].isIndexed)
-			{
-				outputDocs[doc].content=inputDocs[doc].content;
-				continue;
-			}
 			
 			Arrays.fill(vocabCount, 0);
 			seg=inputDocs[doc].content.split(" ");
