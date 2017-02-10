@@ -1,6 +1,6 @@
 # <h1 id="top">API for LORELEI</h1>
 
-LORELEI API source code repository and usage documentation. Feel free to email <wwyang@cs.umd.edu> with any questions.
+This repository holds LORELEI API source code. The documentation is for using the API, not the technical details in source code. Feel free to email <wwyang@cs.umd.edu> with any questions.
 
 * [Input File Format](#input)
 * [Output File Format](#output)
