@@ -1,0 +1,27 @@
+[
+  {
+    "ID": "483898242594136065",
+    "content": "jump hotel pass pass town obscene woman side side bus show butt passenger ",
+    "label": 0
+  },
+  {
+    "ID": "483925670448218112",
+    "content": "deputy director enteric enteric diarrheal diseases vaccine seattle wa united states #jobs ",
+    "label": 0
+  },
+  {
+    "ID": "483944088518262784",
+    "content": "return subject sister lol ",
+    "label": 1
+  },
+  {
+    "ID": "484022572342706176",
+    "content": "disappear ",
+    "label": 0
+  },
+  {
+    "ID": "484091296316137473",
+    "content": "eat vomit ",
+    "label": 0
+  }
+]
