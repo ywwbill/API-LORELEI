@@ -161,14 +161,14 @@ You might have noticed that there exists some unreadable characters in Topic 11.
 
 ## <h2 id="cmd">Command Format</h2>
 
-Our web service is located at `clip-lorelei.umiacs.umd.edu:8080`. Currently we provide the following APIs.
+Our web service is located at `lorelei.umiacs.umd.edu`. Currently we provide the following APIs.
 
 ### <h3 id="convertion">Corpus Convertion</h3>
 
 This service could convert a corpus represented by [words](#raw-doc) into [indices](#indexed-doc), as shown in [Input File Format](#input) section. The command format is
 
 ```
-curl clip-lorelei.umiacs.umd.edu:8080/lorelei/convert-corpus -X POST -v -F corpus=@input-file -F domain=DomainID 
+curl lorelei.umiacs.umd.edu/lorelei/convert-corpus -X POST -v -F corpus=@input-file -F domain=DomainID 
 ```
 
 It has two parameters:
@@ -179,7 +179,7 @@ It has two parameters:
 For example, assuming that the input file is named `doc-test.txt`, users could convert it into [indexed format](#indexed-doc) by calling
 
 ```
-curl clip-lorelei.umiacs.umd.edu:8080/lorelei/convert-corpus -X POST -v -F corpus=@doc-test.txt -F domain=0 > indexed-doc-test.txt
+curl lorelei.umiacs.umd.edu/lorelei/convert-corpus -X POST -v -F corpus=@doc-test.txt -F domain=0 > indexed-doc-test.txt
 ```
 
 ### <h3 id="lda">LDA and its Extensions</h3>
@@ -187,7 +187,7 @@ curl clip-lorelei.umiacs.umd.edu:8080/lorelei/convert-corpus -X POST -v -F corpu
 This service supports to run LDA and its extension(s) on given corpus with a pre-trained model. The command format is
 
 ```
-curl clip-lorelei.umiacs.umd.edu:8080/lorelei/lda -X POST -v -F corpus=@corpus-file -F domain=DomainID -F modelID=ModelID -F numTopics=NumTopics
+curl lorelei.umiacs.umd.edu/lorelei/lda -X POST -v -F corpus=@corpus-file -F domain=DomainID -F modelID=ModelID -F numTopics=NumTopics
 ```
 
 This command has four parameters:
@@ -202,7 +202,7 @@ Please see [Supportings](#support) for values of `DomainID`, `ModelID`, and `Num
 For example, assuming that the input corpus file is named `indexed-doc-test.txt`, and we want to run binary supervised LDA trained on Ebola corpus with 20 topics, the command is
 
 ```
-curl clip-lorelei.umiacs.umd.edu:8080/lorelei/lda -X POST -v -F corpus=@indexed-doc-test -F domain=0 -F modelID=1 -F numTopics=20 > output.txt
+curl lorelei.umiacs.umd.edu/lorelei/lda -X POST -v -F corpus=@indexed-doc-test -F domain=0 -F modelID=1 -F numTopics=20 > output.txt
 ```
 
 ### <h3 id="support">Supportings</h3>
@@ -223,5 +223,5 @@ Currently, I can not figure out how to return the JSON string in pretty print fo
 The example command of [LDA](#lda) is then as follows
 
 ```
-curl clip-lorelei.umiacs.umd.edu:8080/lorelei/lda -X POST -v -F corpus=@indexed-doc-test -F domain=0 -F modelID=1 -F numTopics=20 | ./jq '.' > output.txt
+curl lorelei.umiacs.umd.edu/lorelei/lda -X POST -v -F corpus=@indexed-doc-test -F domain=0 -F modelID=1 -F numTopics=20 | ./jq '.' > output.txt
 ```
