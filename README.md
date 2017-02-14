@@ -60,7 +60,9 @@ The output file contains an `Output` object which has following fields:
 
 - `info` (String): Error information. Empty if the program exits normally.
 - `accuracy` (Double): The accuracy on given corpus. `NaN` if using LDA.
-- `topics` (two-dimensional String array): The words in each topic sorted in descending order by their weights.
+- `topics` (`OutputWord` object matrix): The words in each topic sorted in descending order by their weights. Each `OutputWord` has two fields:
+	- `word` (String): The word.
+	- `weight` (Double): The weight of the word in the given topic.
 - `docs` (`OutputDoc` object array): Each element `OutputDoc` corresponds to a document in the input corpus and has following fields:
 	- `ID`: Same as the input ID.
 	- `topicProb` (Double array): The probabilities of topics in this document.
@@ -69,99 +71,278 @@ The output file contains an `Output` object which has following fields:
 	- `confidence` (Double): The confidence of predicting the predicted label. `NaN` if using LDA.
 	- `label` (Integer): True label. Same as input.
 
-If the [input file](#indexed-doc) in is fed to our web service and the user selects binary supervised LDA with 20 topics, the service will return information as
+If the [input file](#indexed-doc) in is fed to our web service and the user selects binary supervised LDA with 10 topics, the service will return information as
 
 	{
-		"docs": [
-    		{
-      			"ID": "483898242594136065",
-      			"topicProb": [
-        			0.006666666666666667,
-        			0.006666666666666667,
-        			0.006666666666666667,
-        			0.006666666666666667,
-        			0.006666666666666667,
-        			0.006666666666666667,
-        			0.006666666666666667,
-        			0.006666666666666667,
-        			0.006666666666666667,
-        			0.07333333333333333,
-        			0.74,
-        			0.006666666666666667,
-        			0.006666666666666667,
-        			0.006666666666666667,
-        			0.006666666666666667,
-        			0.006666666666666667,
-        			0.006666666666666667,
-        			0.07333333333333333,
-        			0.006666666666666667,
-        			0.006666666666666667
-      				],
-      			"confidence": 0.8211592679487474,
-      			"regression": -1.5242214385796562,
-      			"prediction": 0,
-      			"label": 0
-    		},
-    		{
-      			"ID": "483925670448218112",
-      			"topicProb": [
-        			0.0071428571428571435,
-        			0.0071428571428571435,
-        			0.0071428571428571435,
-        			0.0071428571428571435,
-        			0.07857142857142858,
-        			0.0071428571428571435,
-        			0.0071428571428571435,
-        			0.0071428571428571435,
-        			0.07857142857142858,
-        			0.0071428571428571435,
-        			0.0071428571428571435,
-        			0.0071428571428571435,
-        			0.0071428571428571435,
-        			0.0071428571428571435,
-        			0.0071428571428571435,
-        			0.0071428571428571435,
-        			0.2928571428571428,
-        			0.0071428571428571435,
-        			0.43571428571428567,
-        			0.0071428571428571435
-      				],
-      			"confidence": 0.5105309486540602,
-      			"regression": -0.04213002502912222,
-      			"prediction": 0,
-      			"label": 0
-    		}
-  		],
-  		"topics": [
-    		["whore", "return", "fucking", "make", "fuck", "jessica", "bitch", "time", "disappear", "mother"],
-    		["#kebetu", "catch", "#senegal", "happen", "face", "senegal", "hate", "#dakar", "://", "mind"],
-    		["good", "love", "great", "catch", "nice", "peace", "flight", "night", "make", "stop"],
-    		["catch","person","work","happen","contact","response","fire","://","black","money"],
-			["return","today","day","person","leave","school","nigga","yesterday","catch","tomorrow"],
-			["return","happen","good","love","thing","happy","life","day","make","home"],
-			["pm","fear","crisis","talk","case","ebola","comment","attack","newspaper","leave"],
-			["ebola","#ebola","virus","outbreak","africa","senegal","#liberia","liberia","west","country"],
-			["good","pm","return","make","play","big","beautiful","world","guinea","team"],
-			["case","ebola","lol","di","mom","dem","good","bi","yi","mo"],
-			["happen","appeal","man","year","time","woman","pass","person","give","contact"],
-			["://","鈾�","position","person","flight","story","#adidas","#guinea","sleep","blood"],
-			["flight","airport","://","home","mh17","wait","crash","month","plane","poor"],
-			["day","happen","://","childhood","bad","cnn","waaah","mddr","contact","lose"],
-			["fear","cc","love","god","life","give","limited","time","shot","hurt"],
-			["case","post","subjective","tweeted","intend","tweet","belong","compare","hear","good"],
-			["#ebola","ebola","hospital","sierra","leone","#sierraleone","die","liberia","hit","today"],
-			["time","sweat","home","mm","person","vomit","congo","spit","fever","back"],
-			["://","crisis","blood","family","world","neighbourhood","continuation","pakistan","easy","true"],
-			["disease","://","blood","heart","health","eric","man","malaria","thin","death"]
-  		],
-  		"info": "",
-  		"accuracy": 1
+  	"docs": [
+    {
+      "ID": "483898242594136065",
+      "topicProb": [
+        0.22142857142857145,
+        0.43571428571428567,
+        0.0071428571428571435,
+        0.0071428571428571435,
+        0.0071428571428571435,
+        0.0071428571428571435,
+        0.2928571428571428,
+        0.0071428571428571435,
+        0.0071428571428571435,
+        0.0071428571428571435
+      ],
+      "confidence": 0.8098080278844059,
+      "regression": -1.4487632753387003,
+      "prediction": 0,
+      "label": 0
+    },
+    {
+      "ID": "483925670448218112",
+      "topicProb": [
+        0.007692307692307693,
+        0.007692307692307693,
+        0.007692307692307693,
+        0.007692307692307693,
+        0.007692307692307693,
+        0.9307692307692308,
+        0.007692307692307693,
+        0.007692307692307693,
+        0.007692307692307693,
+        0.007692307692307693
+      ],
+      "confidence": 0.9692353111331822,
+      "regression": -3.450139854634518,
+      "prediction": 0,
+      "label": 0
+    }
+  	],
+  	"topics": [
+    [
+      {
+        "word": "whore",
+        "weight": 0.05875498588266929
+      },
+      {
+        "word": "return",
+        "weight": 0.02648680141621476
+      },
+      {
+        "word": "happen",
+        "weight": 0.019316093757002644
+      },
+      {
+        "word": "make",
+        "weight": 0.01304172455519204
+      },
+      {
+        "word": "ebola",
+        "weight": 0.012593555326491283
+      }
+    ],
+    [
+      {
+        "word": "fear",
+        "weight": 0.03361626624466503
+      },
+      {
+        "word": "bad",
+        "weight": 0.019229847024408955
+      },
+      {
+        "word": "whore",
+        "weight": 0.014913921258332134
+      },
+      {
+        "word": "happen",
+        "weight": 0.014913921258332134
+      },
+      {
+        "word": "return",
+        "weight": 0.013954826643648395
+      }
+    ],
+    [
+      {
+        "word": "case",
+        "weight": 0.2591277647171712
+      },
+      {
+        "word": "post",
+        "weight": 0.050904380367509466
+      },
+      {
+        "word": "subjective",
+        "weight": 0.03651105886868492
+      },
+      {
+        "word": "tweeted",
+        "weight": 0.03459194933550832
+      },
+      {
+        "word": "intend",
+        "weight": 0.022597514753154534
+      }
+    ],
+    [
+      {
+        "word": "pm",
+        "weight": 0.05322420893499452
+      },
+      {
+        "word": "fear",
+        "weight": 0.031851118177553046
+      },
+      {
+        "word": "crisis",
+        "weight": 0.01621227128186415
+      },
+      {
+        "word": "flight",
+        "weight": 0.01569097638534119
+      },
+      {
+        "word": "case",
+        "weight": 0.012563207006203411
+      }
+    ],
+    [
+      {
+        "word": "ebola",
+        "weight": 0.053945608559964324
+      },
+      {
+        "word": "#ebola",
+        "weight": 0.0466501844121104
+      },
+      {
+        "word": "#sierraleone",
+        "weight": 0.016252583796052364
+      },
+      {
+        "word": "sierra",
+        "weight": 0.013820775746767721
+      },
+      {
+        "word": "#liberia",
+        "weight": 0.013415474405220281
+      }
+    ],
+    [
+      {
+        "word": "ebola",
+        "weight": 0.05390501432052323
+      },
+      {
+        "word": "disease",
+        "weight": 0.03766083871243534
+      },
+      {
+        "word": "virus",
+        "weight": 0.02654640277005942
+      },
+      {
+        "word": "://",
+        "weight": 0.022699098020775445
+      },
+      {
+        "word": "#ebola",
+        "weight": 0.01885179327149147
+      }
+    ],
+    [
+      {
+        "word": "happen",
+        "weight": 0.039090948975562666
+      },
+      {
+        "word": "love",
+        "weight": 0.03601983064976089
+      },
+      {
+        "word": "return",
+        "weight": 0.023735357346553767
+      },
+      {
+        "word": "good",
+        "weight": 0.022857894967753256
+      },
+      {
+        "word": "fear",
+        "weight": 0.017154389505549948
+      }
+    ],
+    [
+      {
+        "word": "://",
+        "weight": 0.034221731588077585
+      },
+      {
+        "word": "blood",
+        "weight": 0.028439257740629765
+      },
+      {
+        "word": "catch",
+        "weight": 0.01845134836776534
+      },
+      {
+        "word": "man",
+        "weight": 0.012143195079640436
+      },
+      {
+        "word": "small",
+        "weight": 0.008989118435577986
+      }
+    ],
+    [
+      {
+        "word": "return",
+        "weight": 0.043460617619608
+      },
+      {
+        "word": "good",
+        "weight": 0.02682303290995414
+      },
+      {
+        "word": "day",
+        "weight": 0.02195349592176277
+      },
+      {
+        "word": "home",
+        "weight": 0.021547701172746823
+      },
+      {
+        "word": "airport",
+        "weight": 0.017489753682587348
+      }
+    ],
+    [
+      {
+        "word": "://",
+        "weight": 0.05880467873738183
+      },
+      {
+        "word": "flight",
+        "weight": 0.01981520055546654
+      },
+      {
+        "word": "鈾�",
+        "weight": 0.018212893232922075
+      },
+      {
+        "word": "crisis",
+        "weight": 0.017144688351225765
+      },
+      {
+        "word": "position",
+        "weight": 0.017144688351225765
+      }
+    ]
+  	],
+  	"info": "",
+  	"accuracy": 1
 	}
 
+You might have noticed that there exists some unreadable characters in the last topic. It is actually emojis which can only be displayed properly in Mac OS.
 
-You might have noticed that there exists some unreadable characters in Topic 11. It is actually emojis which can only be displayed properly in Mac OS.
-
-In the example output above, I'm only showing the top 10 words for each topic (`topics` element) due to space limit. The actual `topics` element will contain all the words in descending order by their weights.
+In the example output above, I'm only showing the top 5 words for each topic (`topics` element) due to space limit. The actual `topics` element will contain all the words in descending order by their weights.
 
 ## <h2 id="cmd">Command Format</h2>
 

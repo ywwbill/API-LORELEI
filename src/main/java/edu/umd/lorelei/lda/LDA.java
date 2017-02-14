@@ -391,10 +391,10 @@ public class LDA
 		return result;
 	}
 	
-	public String[] wordsByWeight(int topic, int numTopWords)
+	public LDAWord[] wordsByWeight(int topic, int numTopWords)
 	{
-		String words[]=wordsByWeight(topic);
-		String topWords[]=new String[numTopWords];
+		LDAWord words[]=wordsByWeight(topic);
+		LDAWord topWords[]=new LDAWord[numTopWords];
 		for (int i=0; i<numTopWords; i++)
 		{
 			topWords[i]=words[i];
@@ -402,7 +402,7 @@ public class LDA
 		return topWords;
 	}
 	
-	public String[] wordsByWeight(int topic)
+	public LDAWord[] wordsByWeight(int topic)
 	{
 		LDAWord words[]=new LDAWord[param.numVocab];
 		for (int vocab=0; vocab<param.numVocab; vocab++)
@@ -410,13 +410,7 @@ public class LDA
 			words[vocab]=new LDAWord(param.vocabList.get(vocab), phi[topic][vocab]);
 		}
 		Arrays.sort(words);
-		
-		String sortedWords[]=new String[param.numVocab];
-		for (int vocab=0; vocab<param.numVocab; vocab++)
-		{
-			sortedWords[vocab]=words[vocab].getWord();
-		}
-		return sortedWords;
+		return words;
 	}
 	
 	public void writeResult(String resultFileName, int numTopWords) throws IOException

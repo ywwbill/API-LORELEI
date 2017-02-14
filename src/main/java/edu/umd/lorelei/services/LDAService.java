@@ -5,10 +5,12 @@ import java.io.IOException;
 import edu.umd.lorelei.utils.InputDoc;
 import edu.umd.lorelei.utils.Output;
 import edu.umd.lorelei.utils.OutputDoc;
+import edu.umd.lorelei.utils.OutputWord;
 import edu.umd.lorelei.cfg.Cfg;
 import edu.umd.lorelei.lda.LDA;
 import edu.umd.lorelei.lda.LDAParam;
 import edu.umd.lorelei.lda.bslda.BSLDA;
+import edu.umd.lorelei.lda.utils.LDAWord;
 
 public class LDAService
 {
@@ -63,7 +65,11 @@ public class LDAService
 		
 		for (int topic=0; topic<numTopics; topic++)
 		{
-			output.topics[topic]=lda.wordsByWeight(topic);
+			LDAWord sortedLDAWords[]=lda.wordsByWeight(topic);
+			for (int vocab=0; vocab<param.numVocab; vocab++)
+			{
+				output.topics[topic][vocab]=new OutputWord(sortedLDAWords[vocab].getWord(), sortedLDAWords[vocab].getWeight());
+			}
 		}
 		
 		if (lda instanceof BSLDA)
