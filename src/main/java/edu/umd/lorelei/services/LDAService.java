@@ -2,7 +2,6 @@ package edu.umd.lorelei.services;
 
 import java.io.IOException;
 
-import edu.umd.lorelei.utils.Fourmat;
 import edu.umd.lorelei.utils.InputDoc;
 import edu.umd.lorelei.utils.Output;
 import edu.umd.lorelei.utils.OutputDoc;
@@ -25,7 +24,7 @@ public class LDAService
 		int numDocs=inputDocs.length;
 		if (numDocs>NUM_DOCS_UPPER_LIMIT)
 		{
-			Output output=new Output(0, 0);
+			Output output=new Output(0, 0, 0);
 			output.info="#Docs is over upper limit";
 			return output;
 		}
@@ -43,7 +42,7 @@ public class LDAService
 		lda.initialize();
 		lda.sample(100);
 		
-		Output output=new Output(numDocs, numTopics);
+		Output output=new Output(numDocs, numTopics, param.numVocab);
 		for (int doc=0; doc<numDocs; doc++)
 		{
 			output.docs[doc]=new OutputDoc(inputDocs[doc].ID, numTopics);
@@ -64,13 +63,7 @@ public class LDAService
 		
 		for (int topic=0; topic<numTopics; topic++)
 		{
-			StringBuilder sb=new StringBuilder("Topic "+topic);
-			if (lda instanceof BSLDA)
-			{
-				sb.append(" (Weight: "+Fourmat.format(((BSLDA)lda).getTopicWeight(topic))+")");
-			}
-			sb.append(": "+lda.topWordsByWeight(topic, 10));
-			output.topics[topic]=sb.toString();
+			output.topics[topic]=lda.wordsByWeight(topic);
 		}
 		
 		if (lda instanceof BSLDA)
