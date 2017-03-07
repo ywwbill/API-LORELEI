@@ -400,7 +400,7 @@ curl lorelei.umiacs.umd.edu/lorelei/lda -X POST -v -F corpus=@indexed-doc-test -
 	- 20.
 - `DomainID`:
 	- 0: Ebola (default).
-	- 1: Africom (only supports LDA model, i.e., `ModelID`=1).
+	- 1: Africom (only supports LDA model, i.e., `ModelID`=0).
 
 ## <h2 id="remarks">Remarks</h2>
 
