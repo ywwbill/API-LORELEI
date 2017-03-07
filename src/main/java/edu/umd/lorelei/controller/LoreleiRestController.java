@@ -44,7 +44,7 @@ public class LoreleiRestController
 	public Output runLDA(@RequestParam("corpus") MultipartFile corpusFile,
 			@RequestParam(name="domain", required=false, defaultValue="0") int domainID,
 			@RequestParam(name="modelID", required=false, defaultValue="0") int modelID,
-			@RequestParam(name="numTopics", required=false, defaultValue="20") int numTopics) throws IOException
+			@RequestParam(name="numTopics", required=false, defaultValue="10") int numTopics) throws IOException
 	{
 		InputDoc inputDocs[]=gson.fromJson(new InputStreamReader(corpusFile.getInputStream()), InputDoc[].class);
 		return LDAService.runService(inputDocs, domainID, modelID, numTopics);

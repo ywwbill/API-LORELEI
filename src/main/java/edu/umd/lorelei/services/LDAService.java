@@ -22,6 +22,7 @@ public class LDAService
 		domainID=Cfg.checkDomainID(domainID);
 		modelID=Cfg.checkModelID(modelID);
 		numTopics=Cfg.checkNumTopics(numTopics);
+		if (domainID==1) modelID=0;
 		
 		int numDocs=inputDocs.length;
 		if (numDocs>NUM_DOCS_UPPER_LIMIT)

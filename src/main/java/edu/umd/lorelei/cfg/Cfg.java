@@ -3,7 +3,7 @@ package edu.umd.lorelei.cfg;
 public class Cfg
 {
 	public static String modelNames[]=new String[]{"LDA", "BSLDA"};
-	public static String domainNames[]=new String[]{"Ebola"};
+	public static String domainNames[]=new String[]{"Ebola", "Africom"};
 	
 	public static String getModelFileName(int domainID, int modelID, int numTopics)
 	{
@@ -27,6 +27,6 @@ public class Cfg
 	
 	public static int checkNumTopics(int numTopics)
 	{
-		return (numTopics==10 || numTopics==20 || numTopics==50? numTopics : 20);
+		return (numTopics==10 || numTopics==20? numTopics : 10);
 	}
 }

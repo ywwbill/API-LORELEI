@@ -39,7 +39,7 @@ public class CorpusService
 			outputDocs[doc].label=inputDocs[doc].label;
 			
 			Arrays.fill(vocabCount, 0);
-			seg=inputDocs[doc].content.split(" ");
+			seg=inputDocs[doc].content.toLowerCase().split(" ");
 			int length=0;
 			for (int i=0; i<seg.length; i++)
 			{
