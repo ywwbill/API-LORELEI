@@ -1,6 +1,7 @@
 package edu.umd.lorelei.services;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import edu.umd.lorelei.utils.InputDoc;
 import edu.umd.lorelei.utils.Output;
@@ -10,7 +11,6 @@ import edu.umd.lorelei.cfg.Cfg;
 import edu.umd.lorelei.lda.LDA;
 import edu.umd.lorelei.lda.LDAParam;
 import edu.umd.lorelei.lda.bslda.BSLDA;
-import edu.umd.lorelei.lda.utils.LDAWord;
 
 public class LDAService
 {
@@ -64,13 +64,27 @@ public class LDAService
 			}
 		}
 		
+		double avgWeight[]=new double[param.numVocab];
+		for (int vocab=0; vocab<param.numVocab; vocab++)
+		{
+			for (int topic=0; topic<numTopics; topic++)
+			{
+				avgWeight[vocab]+=Math.log(lda.getTopicVocabProb(topic, vocab));
+			}
+			avgWeight[vocab]/=(double)numTopics;
+		}
+		
 		for (int topic=0; topic<numTopics; topic++)
 		{
-			LDAWord sortedLDAWords[]=lda.wordsByWeight(topic);
 			for (int vocab=0; vocab<param.numVocab; vocab++)
 			{
-				output.topics[topic][vocab]=new OutputWord(sortedLDAWords[vocab].getWord(), sortedLDAWords[vocab].getWeight());
+				output.topics[topic][vocab]=new OutputWord();
+				output.topics[topic][vocab].word=param.vocabList.get(vocab);
+				output.topics[topic][vocab].weight=lda.getTopicVocabProb(topic, vocab);
+				double weight=lda.getTopicVocabProb(topic, vocab);
+				output.topics[topic][vocab].termScore=weight*(Math.log(weight)-avgWeight[vocab]);
 			}
+			Arrays.sort(output.topics[topic]);
 		}
 		
 		if (lda instanceof BSLDA)

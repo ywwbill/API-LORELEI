@@ -295,6 +295,11 @@ public class LDA
 		return theta.clone();
 	}
 	
+	public double getTopicVocabProb(int topic, int vocab)
+	{
+		return phi[topic][vocab];
+	}
+	
 	public double[][] getTopicVocabDist()
 	{
 		return phi.clone();
