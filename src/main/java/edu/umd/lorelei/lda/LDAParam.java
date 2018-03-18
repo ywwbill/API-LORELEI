@@ -26,6 +26,7 @@ public class LDAParam
 	public HashMap<String, Integer> vocabMap;
 	public int numVocab;
 	
+	public double mu=0.0;
 	public double sigma=1.0; //for SLDA
 	public double nu=1.0; // for SLDA weight prior
 	public double c=1.0; //for hinge loss

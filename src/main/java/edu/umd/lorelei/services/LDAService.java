@@ -11,10 +11,11 @@ import edu.umd.lorelei.cfg.Cfg;
 import edu.umd.lorelei.lda.LDA;
 import edu.umd.lorelei.lda.LDAParam;
 import edu.umd.lorelei.lda.bslda.BSLDA;
+import edu.umd.lorelei.lda.slda.SLDA;
 
 public class LDAService
 {
-	public static final int LDA=0,BSLDA=1;
+	public static final int LDA=0,BSLDA=1,SLDA=2;
 	public static final int NUM_DOCS_UPPER_LIMIT=50000;
 	
 	public static Output runService(InputDoc inputDocs[], int domainID, int modelID, int numTopics) throws IOException
@@ -22,7 +23,12 @@ public class LDAService
 		domainID=Cfg.checkDomainID(domainID);
 		modelID=Cfg.checkModelID(modelID);
 		numTopics=Cfg.checkNumTopics(numTopics);
-		if (domainID==1) modelID=0;
+		if (domainID==1) modelID=LDA;
+		if (domainID>=2)
+		{
+			modelID=SLDA;
+			numTopics=20;
+		}
 		
 		int numDocs=inputDocs.length;
 		if (numDocs>NUM_DOCS_UPPER_LIMIT)
@@ -37,6 +43,7 @@ public class LDAService
 		LDA lda;
 		switch (modelID)
 		{
+		case SLDA: lda=new SLDA(Cfg.getModelFileName(domainID, modelID, numTopics), param); break;
 		case BSLDA: lda=new BSLDA(Cfg.getModelFileName(domainID, modelID, numTopics), param); break;
 		case LDA:
 		default: lda=new LDA(Cfg.getModelFileName(domainID, modelID, numTopics), param); break;
@@ -61,6 +68,11 @@ public class LDAService
 				double posProb=1.0/(1.0+Math.exp(-output.docs[doc].regression));
 				output.docs[doc].prediction=(posProb>0.5? 1 : 0);
 				output.docs[doc].confidence=(output.docs[doc].prediction==1? posProb : 1.0-posProb);
+			}
+			
+			if (lda instanceof SLDA)
+			{
+				output.docs[doc].regression=((SLDA)lda).computeWeight(doc);
 			}
 		}
 		

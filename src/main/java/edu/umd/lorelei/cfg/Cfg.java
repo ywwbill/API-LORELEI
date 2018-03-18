@@ -2,8 +2,9 @@ package edu.umd.lorelei.cfg;
 
 public class Cfg
 {
-	public static String modelNames[]=new String[]{"LDA", "BSLDA"};
-	public static String domainNames[]=new String[]{"Ebola", "Africom"};
+	public static String modelNames[]=new String[]{"LDA", "BSLDA", "SLDA"};
+	public static String domainNames[]=new String[]{"Ebola", "Africom", "EI-En-Anger", "EI-En-Fear", "EI-En-Joy", "EI-En-Sadness",
+			"EI-Es-Anger", "EI-Es-Fear", "EI-Es-Joy", "EI-Es-Sadness", "V-En", "V-Es"};
 	
 	public static String getModelFileName(int domainID, int modelID, int numTopics)
 	{
